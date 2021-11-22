@@ -44,6 +44,7 @@ class Project(object):
         'returnFormat': 'json'
         }
         r = requests.post('https://cri-datacap.org/api/',data=data)
+        return r.json()
 
         
         
