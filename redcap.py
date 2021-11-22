@@ -1,7 +1,7 @@
 import pandas as pd
 import json
 
-#defines the python object Project which serves as a holder if information regarding a RedCap API connection
+#defines the python object Project which serves as a holder of information regarding a RedCap API connection
 #url is the default RedCap API endpoint https://cri-datacap.org/api/
 #token is a unique redcap API key that is generated on a user and a project specific basis
 class Project(object):
