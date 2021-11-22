@@ -1,4 +1,3 @@
-import uptriage_query_ben, requests
 import pandas as pd
 import json
 
