@@ -45,6 +45,38 @@ class Project(object):
         }
         r = requests.post('https://cri-datacap.org/api/',data=data)
         return r.json()
+    #accepts a list of RedCap record IDs to be deleted from the project. This input must be in the form of a Python list, and user must have correct permissions to delete record.
+    def delete_record(self,records):
+        data = {
+        'token': self.token,
+        'action': 'delete',
+        'content': 'record',
+        }
+        records_dict = { f"records[{idx}]": record for idx, record in enumerate(records)}
+        data.update(records_dict)
+        r = requests.post('https://cri-datacap.org/api/',data=data)
+        print('HTTP Status: ' + str(r.status_code))
+        print(r.text)
+    #Deletes all records in the RedCap project. Prompts the user to confirm their desire to delete all records in the project to prevent erroneous record deletion.
+    def delete_all_records(self):
+        data = {'token': self.token,
+        'content': 'generateNextRecordName'
+        }
+        r = requests.post(self.url,data=data)
+        next_record_int = int(r.text)
+        user_spec = input("Are you sure you want to delete all the records in this project? This action cannot be undone (y/n): ")
+        if user_spec.lower() == "y":
+            for i in range(next_record_int):   
+                data = {
+                'token': self.token,
+                'action': 'delete',
+                'content': 'record',
+                }
+                records_dict = {"records[0]":str(i)}
+                data.update(records_dict)
+                r = requests.post('https://cri-datacap.org/api/',data=data)
+                print('HTTP Status: ' + str(r.status_code))
+                print(r.text)
 
         
         
